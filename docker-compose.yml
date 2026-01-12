@@ -1,0 +1,19 @@
+services:
+  streamlit_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qnxt-streamlit
+    ports:
+      - "9400:9401"  
+    env_file:
+      - .env
+    environment:
+     - CHROMA_PERSIST_DIR=/app/backend/schema_embeddings_store
+     - CHROMA_COLLECTION_NAME=qnxt-schema-collection
+    volumes:
+      - ./frontend:/app/frontend
+      - ./backend:/app/backend
+      - ./backend/schema_embeddings_store:/app/backend/schema_embeddings_store
+    working_dir: /app/frontend
+    restart: always
